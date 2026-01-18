@@ -1,7 +1,7 @@
 class NaiveMovingAverageStrategy:
     def __init__(self):
-        self.prices = []        # stores ALL past prices
-        self.signals = []       # optional: store signals for inspection
+        self.prices = []        
+        self.signals = []       
 
     def update(self, price):
         self.prices.append(price)
@@ -17,7 +17,7 @@ class NaiveMovingAverageStrategy:
             self.signals.append("HOLD")
 
     def total_return(self):
-        # very simple buy-and-hold sanity metric
+        
         if len(self.prices) < 2:
             return 0.0
         return (self.prices[-1] / self.prices[0]) - 1.0
