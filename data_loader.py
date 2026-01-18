@@ -4,6 +4,7 @@ Storing full data set in memory requires O(n), with n being the number of Market
 
 from typing import List
 from models import MarketDataPoint
+import csv
 
 def load_market_data_csv(filepath: str) -> List[MarketDataPoint]:
     data: List[MarketDataPoint] = []
