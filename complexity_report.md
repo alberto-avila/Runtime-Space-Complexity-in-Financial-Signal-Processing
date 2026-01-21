@@ -11,7 +11,7 @@ The runtime graphs show that at small input sizes, the naive and windowed strate
 <img width="640" height="480" alt="Runtime Plot" src="https://github.com/user-attachments/assets/6b46a845-44d6-4f26-bfe6-f902858f3c41" />
 
 
-The memory usage graphs show increasing memory consumption for both strategies as input size grows. This is expected because both implementations store one signal per tick, which dominates memory usage at scale. While the windowed strategy has O(k) algorithmic memory for the moving average itself, the empirical measurements reflect total process memory, including auxiliary storage and profiling overhead. This highlights the difference between theoretical algorithmic complexity and observed system-level memory usage.
+The memory usage graphs show increasing memory consumption for both strategies as input size grows. This is expected because both implementations store one signal per tick. While the windowed strategy was though to have similar space complexity to NaiveMovingAverage Strategy here we see that is not the case for larger input sizes, where window strategy actually gets bigger. 
 
 <img width="640" height="480" alt="Memory Usage Plot" src="https://github.com/user-attachments/assets/bac7f959-c188-4801-aa7a-360af7401006" />
 
