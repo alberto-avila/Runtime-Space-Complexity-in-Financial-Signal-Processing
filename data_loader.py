@@ -1,5 +1,5 @@
 '''
-Storing full data set in memory requires O(n), with n being the number of Market Data Points. 
+Storing full data set in memory requires O(n), with n being the number of Market Data Points.
 '''
 
 from typing import List
@@ -26,5 +26,4 @@ def load_market_data_csv(filepath: str) -> List[MarketDataPoint]:
 
             data.append(MarketDataPoint(timestamp=ts, symbol=sym, price=px))
 
-    print(f"Rows loaded: {len(data)}")
     return data
