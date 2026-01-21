@@ -8,7 +8,7 @@ The WindowedMovingAverageStrategy maintains a fixed-size window of the last k pr
 
 The runtime graphs show that at small input sizes, the naive and windowed strategies perform similarly. As the input size increases to 10k and 100k ticks, the naive strategy’s runtime grows much faster. In contrast, the windowed strategy doesn't increase as much with the larger input sizes.
 
-img width="640" height="480" alt="Runtime Plot" src="https://github.com/user-attachments/assets/6b46a845-44d6-4f26-bfe6-f902858f3c41" />
+<img width="640" height="480" alt="Runtime Plot" src="https://github.com/user-attachments/assets/6b46a845-44d6-4f26-bfe6-f902858f3c41" />
 
 
 The memory usage graphs show increasing memory consumption for both strategies as input size grows. This is expected because both implementations store one signal per tick, which dominates memory usage at scale. While the windowed strategy has O(k) algorithmic memory for the moving average itself, the empirical measurements reflect total process memory, including auxiliary storage and profiling overhead. This highlights the difference between theoretical algorithmic complexity and observed system-level memory usage.
@@ -46,6 +46,7 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     28                                           
     29                                                   # Overall per-update time complexity: O(n).
     30                                                   # Total time complexity over n ticks: O(n^2).
+==============================================================
 
 
     Naive 10k
@@ -75,7 +76,7 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     28                                           
     29                                                   # Overall per-update time complexity: O(n).
     30                                                   # Total time complexity over n ticks: O(n^2).
-
+==============================================================
 
     Naive 100k
     Timer unit: 1e-07 s
@@ -98,7 +99,7 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     18     99964     416387.0      4.2      0.2              self.signals.append("SELL")
     19                                                   else:
     20         1         21.0     21.0      0.0              self.signals.append("HOLD")
-
+==============================================================
 
 
     Window 1k
@@ -133,7 +134,7 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     80                                                   else:
     81       743       2916.0      3.9      9.2              self.signals.append("HOLD")
     82                                                       # Append is O(1).
-
+==============================================================
 
     Window 10k
     Timer unit: 1e-07 s
@@ -167,7 +168,7 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     80                                                   else:
     81      9743      41051.0      4.2     12.6              self.signals.append("HOLD")
     82                                                       # Append is O(1).
-
+==============================================================
 
 
     Window 100k
@@ -195,3 +196,4 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     51       153        566.0      3.7      0.0              self.signals.append("SELL")
     52                                                   else:
     53     99743     383692.0      3.8     12.8              self.signals.append("HOLD")
+==============================================================
