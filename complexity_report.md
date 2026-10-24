@@ -6,12 +6,12 @@ The NaiveMovingAverageStrategy recomputes the average price on every update by s
 
 The WindowedMovingAverageStrategy maintains a fixed-size window of the last k prices and updates the average incrementally using a running sum. Each update performs only constant-time operations, giving O(1) time per update and O(n) total runtime over n ticks. This strategy also has O(n) space complexity.
 
-The runtime graphs show that at small input sizes, the naive and windowed strategies perform similarly. As the input size increases to 10k and 100k ticks, the naive strategy’s runtime grows much faster. In contrast, the windowed strategy doesn't increase as much with the larger input sizes.
+The runtime graphs show that the naive strategy is already more than 10x slower than the windowed strategy at 1k ticks, and the gap widens as the input size grows. Each 10x increase in ticks makes the naive strategy about 100x slower (quadratic growth), while the windowed strategy only gets about 10x slower (linear growth). At 100k ticks the naive strategy takes about 25 seconds, compared to a few hundredths of a second for the windowed strategy.
 
 <img width="640" height="480" alt="Runtime Plot" src="https://github.com/user-attachments/assets/6b46a845-44d6-4f26-bfe6-f902858f3c41" />
 
 
-The memory usage graphs show increasing memory consumption for both strategies as input size grows. This is expected because both implementations store one signal per tick. While the windowed strategy was thought to have similar space complexity to the NaiveMovingAverageStrategy, here we see that is not the case for larger input sizes, where the windowed strategy actually gets bigger.
+The memory usage graphs show increasing memory consumption for both strategies as input size grows. This is expected because both implementations store one signal per tick, so both are O(n) in space; the naive strategy also stores all n prices, while the windowed strategy keeps only the last k. In this plot the windowed strategy has a slightly higher peak at 100k ticks, but the difference is only about 2 MiB on top of a ~100 MiB Python process, and in a re-run the order flipped (naive 126.95 MiB vs. windowed 126.30 MiB). memory_profiler samples the memory of the whole process every 0.1 s, so differences this small are within measurement noise rather than a real difference between the strategies.
 
 <img width="640" height="480" alt="Memory Usage Plot" src="https://github.com/user-attachments/assets/bac7f959-c188-4801-aa7a-360af7401006" />
 
