@@ -45,6 +45,8 @@ def cprofile_one(strategy_factory, data, n, prof_out_path, top_n=15):
 
 def line_profile_one(strategy_factory, data, n, out_path, method_name="update"):
     """
+    Runs line_profiler on the strategy's update() method for the first n ticks
+    and writes the per-line timing report to out_path.
     """
 
     strategy = strategy_factory()

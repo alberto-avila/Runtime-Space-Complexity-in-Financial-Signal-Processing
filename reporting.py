@@ -1,7 +1,9 @@
 import matplotlib.pyplot as plt
 
-def plot_runtime_vs_input_size(sizes, naive_times, windowed_times):
+def plot_runtime_vs_input_size(sizes, naive_times, windowed_times, save_path=None):
     """
+    Plots runtime (seconds) against input size on log-log axes.
+    If save_path is given, the figure is also saved as a PNG.
     """
     if not (len(sizes) == len(naive_times) == len(windowed_times)):
         raise ValueError("sizes, naive_times, and windowed_times must have the same length.")
@@ -17,11 +19,15 @@ def plot_runtime_vs_input_size(sizes, naive_times, windowed_times):
     plt.title("Runtime vs Input Size")
     plt.legend()
     plt.tight_layout()
+    if save_path is not None:
+        plt.savefig(save_path, dpi=100)
     plt.show()
 
 
-def plot_memory_vs_input_size(sizes, naive_memory_mib, windowed_memory_mib):
+def plot_memory_vs_input_size(sizes, naive_memory_mib, windowed_memory_mib, save_path=None):
     """
+    Plots peak process memory (MiB) against input size (log x-axis).
+    If save_path is given, the figure is also saved as a PNG.
     """
     if not (len(sizes) == len(naive_memory_mib) == len(windowed_memory_mib)):
         raise ValueError("sizes, naive_memory_mib, and windowed_memory_mib must have the same length.")
@@ -36,4 +42,6 @@ def plot_memory_vs_input_size(sizes, naive_memory_mib, windowed_memory_mib):
     plt.title("Peak Memory vs Input Size")
     plt.legend()
     plt.tight_layout()
+    if save_path is not None:
+        plt.savefig(save_path, dpi=100)
     plt.show()

@@ -11,15 +11,17 @@ The runtime graphs show that at small input sizes, the naive and windowed strate
 <img width="640" height="480" alt="Runtime Plot" src="https://github.com/user-attachments/assets/6b46a845-44d6-4f26-bfe6-f902858f3c41" />
 
 
-The memory usage graphs show increasing memory consumption for both strategies as input size grows. This is expected because both implementations store one signal per tick. While the windowed strategy was though to have similar space complexity to NaiveMovingAverage Strategy here we see that is not the case for larger input sizes, where window strategy actually gets bigger. 
+The memory usage graphs show increasing memory consumption for both strategies as input size grows. This is expected because both implementations store one signal per tick. While the windowed strategy was thought to have similar space complexity to the NaiveMovingAverageStrategy, here we see that is not the case for larger input sizes, where the windowed strategy actually gets bigger.
 
 <img width="640" height="480" alt="Memory Usage Plot" src="https://github.com/user-attachments/assets/bac7f959-c188-4801-aa7a-360af7401006" />
 
-The BetterMovingAverageStrategy calculates the same moving average as the naive strategy, but does so by saving a running sum and a count of observations. This avoids recomputing all prices every single time. As a result, we have O(n) total runtime. Compared to the naive approach, this strategy is more efficient in both time and space. 
+The BetterMovingAverageStrategy calculates the same moving average as the naive strategy, but does so by saving a running sum and a count of observations. This avoids recomputing all prices every single time. As a result, we have O(n) total runtime. Compared to the naive approach, this strategy is more efficient in both time and space.
 
-Line Profilers:
+## Line profiles
 
-Naive 1K
+### Naive, 1K ticks
+
+```text
 Timer unit: 1e-07 s
 
 Total time: 0.0044687 s
@@ -47,9 +49,11 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     29                                                   # Overall per-update time complexity: O(n).
     30                                                   # Total time complexity over n ticks: O(n^2).
 ==============================================================
+```
 
+### Naive, 10K ticks
 
-    Naive 10k
+```text
     Timer unit: 1e-07 s
 
 Total time: 0.287758 s
@@ -77,8 +81,11 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     29                                                   # Overall per-update time complexity: O(n).
     30                                                   # Total time complexity over n ticks: O(n^2).
 ==============================================================
+```
 
-    Naive 100k
+### Naive, 100K ticks
+
+```text
     Timer unit: 1e-07 s
 
 Total time: 24.376 s
@@ -100,9 +107,11 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     19                                                   else:
     20         1         21.0     21.0      0.0              self.signals.append("HOLD")
 ==============================================================
+```
 
+### Windowed, 1K ticks
 
-    Window 1k
+```text
     Timer unit: 1e-07 s
 
 Total time: 0.0031716 s
@@ -135,8 +144,11 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     81       743       2916.0      3.9      9.2              self.signals.append("HOLD")
     82                                                       # Append is O(1).
 ==============================================================
+```
 
-    Window 10k
+### Windowed, 10K ticks
+
+```text
     Timer unit: 1e-07 s
 
 Total time: 0.0326007 s
@@ -169,9 +181,11 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     81      9743      41051.0      4.2     12.6              self.signals.append("HOLD")
     82                                                       # Append is O(1).
 ==============================================================
+```
 
+### Windowed, 100K ticks
 
-    Window 100k
+```text
     Timer unit: 1e-07 s
 
 Total time: 0.30083 s
@@ -197,3 +211,4 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     52                                                   else:
     53     99743     383692.0      3.8     12.8              self.signals.append("HOLD")
 ==============================================================
+```

@@ -56,6 +56,9 @@ class WindowedMovingAverageStrategy(Strategy):
         self.running_sum = 0.0
         # running_sum stores a single float.
         # Space complexity: O(1).
+        self.first_price = None
+        # first price ever seen, for total_return (the window drops it).
+        # Space complexity: O(1).
         self.signals = []
         # signals stores one signal per tick.
         # Space complexity: O(n).
@@ -64,6 +67,8 @@ class WindowedMovingAverageStrategy(Strategy):
         pass
 
     def update(self, price):
+        if self.first_price is None:
+            self.first_price = price
         self.prices.append(price)
         # deque append is O(1).
         self.running_sum += price
@@ -97,7 +102,7 @@ class WindowedMovingAverageStrategy(Strategy):
 
         # Constant-time arithmetic and indexing.
         # Time complexity: O(1).
-        return (self.prices[-1] / self.prices[0]) - 1.0
+        return (self.prices[-1] / self.first_price) - 1.0
 
 class BetterMovingAverageStrategy(Strategy):
     def __init__(self):
